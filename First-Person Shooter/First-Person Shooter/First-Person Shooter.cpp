@@ -33,6 +33,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(lpCmdLine);
 
     // TODO: Place code here.
+	bool fullScreen = true;
+	DWORD dwordExStyle;
+	DWORD dwordStyle;
+	RECT windowRECT;
+	int nX = 0, nY = 0;
+	dwordExStyle = WS_EX_APPWINDOW|WS_EX_WINDOWEDGE;
+	dwordStyle = WS_OVERLAPPEDWINDOW;
 
     // Initialize global strings
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
