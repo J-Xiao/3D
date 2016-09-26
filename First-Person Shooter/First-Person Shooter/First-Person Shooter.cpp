@@ -11,6 +11,13 @@ HINSTANCE hInst;                                // current instance
 WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 
+HDC hDC;
+HGLRC hRC = NULL;
+HWND hWND = NULL;
+int width = 800;
+int height = 600;
+int bits = 16;
+
 // Forward declarations of functions included in this code module:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
