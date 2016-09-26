@@ -34,12 +34,19 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // TODO: Place code here.
 	bool fullScreen = true;
-	DWORD dwordExStyle;
-	DWORD dwordStyle;
+	DWORD dwExStyle;
+	DWORD dwStyle;
 	RECT windowRECT;
-	int nX = 0, nY = 0;
-	dwordExStyle = WS_EX_APPWINDOW|WS_EX_WINDOWEDGE;
-	dwordStyle = WS_OVERLAPPEDWINDOW;
+	int deltaX = 0, deltaY = 0;
+	dwExStyle = WS_EX_APPWINDOW|WS_EX_WINDOWEDGE;
+	dwStyle = WS_OVERLAPPEDWINDOW;
+
+	int wid = GetSystemMetrics(SM_CXSCREEN);
+	int hei = GetSystemMetrics(SM_CYSCREEN);
+	deltaX = (wid - width) / 2;
+	deltaY = (hei - height) / 2;
+	AdjustWindowRectEx(&windowRECT, dwStyle, FALSE, dwExStyle);
+
 
     // Initialize global strings
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
