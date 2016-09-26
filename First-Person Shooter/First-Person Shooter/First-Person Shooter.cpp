@@ -47,6 +47,23 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	deltaY = (hei - height) / 2;
 	AdjustWindowRectEx(&windowRECT, dwStyle, FALSE, dwExStyle);
 
+	LPCWCHAR cc = (LPCWCHAR) "tml";
+	WNDCLASSEX wc = {
+		sizeof(WNDCLASSEX),
+		CS_CLASSDC,
+		WndProc,
+		0,
+		0,
+		GetModuleHandle(NULL),
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		cc,
+		NULL
+	};
+
+	RegisterClassEx(&wc);
 
     // Initialize global strings
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
