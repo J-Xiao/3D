@@ -65,6 +65,24 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	RegisterClassEx(&wc);
 
+	hWND = CreateWindowEx(
+		NULL,
+		cc,
+		(LPCWSTR) "",
+		dwStyle | WS_CLIPCHILDREN | WS_CLIPSIBLINGS,
+		deltaX,
+		deltaY,
+		width,
+		height,
+		NULL,
+		NULL,
+		hInst,
+		NULL
+	);
+
+	ShowWindow(hWND, SW_SHOWDEFAULT);
+	UpdateWindow(hWND);
+
     // Initialize global strings
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_FIRSTPERSONSHOOTER, szWindowClass, MAX_LOADSTRING);
