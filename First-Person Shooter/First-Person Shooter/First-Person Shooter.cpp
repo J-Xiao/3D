@@ -13,7 +13,7 @@ WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 
 HDC hDC;
 HGLRC hRC = NULL;
-HWND hWND = NULL;
+HWND hWnd = NULL;
 int width = 800;
 int height = 600;
 int bits = 16;
@@ -47,7 +47,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	deltaY = (hei - height) / 2;
 	AdjustWindowRectEx(&windowRECT, dwStyle, FALSE, dwExStyle);
 
-	LPCWCHAR cc = (LPCWCHAR) "tml";
+	LPCWCHAR cc = L"tml";
 	WNDCLASSEX wc = {
 		sizeof(WNDCLASSEX),
 		CS_CLASSDC,
@@ -65,10 +65,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	RegisterClassEx(&wc);
 
-	hWND = CreateWindowEx(
+	hWnd = CreateWindowEx(
 		NULL,
 		cc,
-		(LPCWSTR) "",
+		L"Call of Duty 0",
 		dwStyle | WS_CLIPCHILDREN | WS_CLIPSIBLINGS,
 		deltaX,
 		deltaY,
@@ -80,8 +80,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		NULL
 	);
 
-	ShowWindow(hWND, SW_SHOWDEFAULT);
-	UpdateWindow(hWND);
+	ShowWindow(hWnd, SW_SHOWDEFAULT);
+	UpdateWindow(hWnd);
 
     // Initialize global strings
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
@@ -89,10 +89,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MyRegisterClass(hInstance);
 
     // Perform application initialization:
-    if (!InitInstance (hInstance, nCmdShow))
+    /*if (!InitInstance (hInstance, nCmdShow))
     {
         return FALSE;
-    }
+    }*/
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_FIRSTPERSONSHOOTER));
 
@@ -149,23 +149,23 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //        In this function, we save the instance handle in a global variable and
 //        create and display the main program window.
 //
-BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
-{
-   hInst = hInstance; // Store instance handle in our global variable
-
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
-
-   if (!hWnd)
-   {
-      return FALSE;
-   }
-
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
-
-   return TRUE;
-}
+//BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
+//{
+//   hInst = hInstance; // Store instance handle in our global variable
+//
+//   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+//      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+//
+//   if (!hWnd)
+//   {
+//      return FALSE;
+//   }
+//
+//   ShowWindow(hWnd, nCmdShow);
+//   UpdateWindow(hWnd);
+//
+//   return TRUE;
+//}
 
 //
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
@@ -181,6 +181,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
+	case WM_CREATE:
+		hDC = GetDC(hWnd);
+		break;
+	
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
