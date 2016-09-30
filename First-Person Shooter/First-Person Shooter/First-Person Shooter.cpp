@@ -11,6 +11,7 @@ HINSTANCE hInst;                                // current instance
 WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 
+
 HDC hDC;
 HGLRC hRC = NULL;
 HWND hWnd = NULL;
@@ -183,7 +184,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
 	case WM_CREATE:
 		hDC = GetDC(hWnd);
-		SetPixelFormat(hDC);
+		
 		return 0;
 		break;
 	
@@ -239,4 +240,10 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     }
     return (INT_PTR)FALSE;
+}
+
+// OpenGL module
+BOOL SetupPixelFormat(HDC hDC) {
+	int nPixelFormat;
+
 }
