@@ -20,6 +20,7 @@
 //#include <string>
 
 // TODO: reference additional headers your program requires here
+#include <iostream>
 
 // header files
 #include <gl\GL.h>

@@ -89,10 +89,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MyRegisterClass(hInstance);
 
     // Perform application initialization:
-    /*if (!InitInstance (hInstance, nCmdShow))
-    {
-        return FALSE;
-    }*/
+    //if (!InitInstance (hInstance, nCmdShow))
+    //{
+    //    return FALSE;
+    //}
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_FIRSTPERSONSHOOTER));
 
@@ -153,7 +153,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //{
 //   hInst = hInstance; // Store instance handle in our global variable
 //
-//   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+//   HWND hWnd = CreateWindowW(szWindowClass, L"Call of Duty", WS_OVERLAPPEDWINDOW,
 //      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 //
 //   if (!hWnd)
@@ -183,6 +183,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
 	case WM_CREATE:
 		hDC = GetDC(hWnd);
+		SetPixelFormat(hDC);
+		return 0;
 		break;
 	
     case WM_COMMAND:
