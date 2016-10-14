@@ -265,4 +265,8 @@ BOOL SetupPixelFormat(HDC hDC) {
 		0,
 		0
 	};
+	
+	if (!(nPixelFormat == ChoosePixelFormat(hDC, &pfd))) {
+		MessageBox(NULL, "Not found", L"Error", MB_OK | MB_ICONEXCLAMATION);
+	}
 }
