@@ -266,7 +266,12 @@ BOOL SetupPixelFormat(HDC hDC) {
 		0
 	};
 	
-	if (!(nPixelFormat == ChoosePixelFormat(hDC, &pfd))) {
-		MessageBox(NULL, "Not found", L"Error", MB_OK | MB_ICONEXCLAMATION);
+	if (!(nPixelFormat = ChoosePixelFormat(hDC, &pfd))) {
+		MessageBox(NULL, L"Not found", L"Error", MB_OK | MB_ICONEXCLAMATION);
 	}
+
+	SetPixelFormat(hDC, nPixelFormat, &pfd);
+	hRC = wglCreateContext(hDC);
+	wglMakeCurrent(hDC, hRC);
+	return TRUE;
 }
