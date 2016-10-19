@@ -39,7 +39,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	DWORD dwStyle;
 	RECT windowRECT;
 	int deltaX = 0, deltaY = 0;
-	dwExStyle = WS_EX_APPWINDOW|WS_EX_WINDOWEDGE;
+	dwExStyle = WS_EX_APPWINDOW | WS_EX_WINDOWEDGE;
 	dwStyle = WS_OVERLAPPEDWINDOW;
 
 	int wid = GetSystemMetrics(SM_CXSCREEN);
@@ -90,10 +90,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MyRegisterClass(hInstance);
 
     // Perform application initialization:
-    //if (!InitInstance (hInstance, nCmdShow))
-    //{
-    //    return FALSE;
-    //}
+    /*if (!InitInstance (hInstance, nCmdShow))
+    {
+        return FALSE;
+    }*/
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_FIRSTPERSONSHOOTER));
 
@@ -184,7 +184,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
 	case WM_CREATE:
 		hDC = GetDC(hWnd);
-		
+		SetupPixelFormat(hDC);
+		return 0;
+		break;
+
+	case WM_CLOSE:
+
+		PostQuitMessage(0);
 		return 0;
 		break;
 	
