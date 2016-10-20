@@ -189,7 +189,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 
 	case WM_CLOSE:
-
+		CleanUP();
 		PostQuitMessage(0);
 		return 0;
 		break;
@@ -280,4 +280,9 @@ BOOL SetupPixelFormat(HDC hDC) {
 	hRC = wglCreateContext(hDC);
 	wglMakeCurrent(hDC, hRC);
 	return TRUE;
+}
+
+void CleanUP() {
+	wglMakeCurrent(hDC, NULL);
+	wglDeleteContext(hRC);
 }
