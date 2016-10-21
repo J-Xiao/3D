@@ -193,6 +193,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		PostQuitMessage(0);
 		return 0;
 		break;
+
+	case WM_SIZE:
+		height = HIWORD(lParam);
+		width = LOWORD(lParam);
 	
     case WM_COMMAND:
         {
@@ -280,6 +284,12 @@ BOOL SetupPixelFormat(HDC hDC) {
 	hRC = wglCreateContext(hDC);
 	wglMakeCurrent(hDC, hRC);
 	return TRUE;
+}
+
+void init(float width, float height)
+{
+	glViewport(0, 0, width, height);
+	glMatrixMode(GL_PROJECTION);
 }
 
 void CleanUP() {
