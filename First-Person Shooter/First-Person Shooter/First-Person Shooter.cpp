@@ -297,6 +297,8 @@ void init(float width, float height)
 		1.0f,
 		1000.0f
 	);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 }
 
 void CleanUP() {
