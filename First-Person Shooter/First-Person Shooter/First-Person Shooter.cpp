@@ -290,6 +290,13 @@ void init(float width, float height)
 {
 	glViewport(0, 0, width, height);
 	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(
+		45.0f,
+		width / height,
+		1.0f,
+		1000.0f
+	);
 }
 
 void CleanUP() {
