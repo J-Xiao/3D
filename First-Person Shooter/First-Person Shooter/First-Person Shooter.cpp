@@ -187,17 +187,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		SetupPixelFormat(hDC);
 		return 0;
 		break;
-
+		
 	case WM_CLOSE:
-		CleanUP();
+		CleanUp();
 		PostQuitMessage(0);
 		return 0;
 		break;
-
+		
 	case WM_SIZE:
 		height = HIWORD(lParam);
 		width = LOWORD(lParam);
-	
+		if (height == 0) {
+			height = 1;
+		}
+		init(width, height);
+		return 0;
+		break;
+
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
@@ -301,7 +307,7 @@ void init(float width, float height)
 	glLoadIdentity();
 }
 
-void CleanUP() {
+void CleanUp() {
 	wglMakeCurrent(hDC, NULL);
 	wglDeleteContext(hRC);
 }
