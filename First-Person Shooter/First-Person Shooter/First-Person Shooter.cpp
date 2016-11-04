@@ -204,6 +204,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		return 0;
 		break;
 
+	case WM_KEYUP:
+		switch (wParam) {
+			case VK_ESCAPE:
+				CleanUp();
+				PostQuitMessage(0);
+				return 0;
+				break;
+		}
+
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
