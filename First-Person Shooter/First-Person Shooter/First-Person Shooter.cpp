@@ -267,6 +267,11 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     return (INT_PTR)FALSE;
 }
 
+void GameLoop()
+{
+	MSG msg;
+}
+
 // OpenGL module
 BOOL SetupPixelFormat(HDC hDC) {
 	int nPixelFormat;
