@@ -83,6 +83,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
 	UpdateWindow(hWnd);
+	GameLoop();
 
     // Initialize global strings
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
@@ -97,7 +98,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_FIRSTPERSONSHOOTER));
 
-    MSG msg;
+    //MSG msg;
 
     //// Main message loop:
     //while (getmessage(&msg, nullptr, 0, 0))
@@ -109,7 +110,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     //    }
     //}
 
-    return (int) msg.wParam;
+    //return (int) msg.wParam;
+	return 0;
 }
 
 

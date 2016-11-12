@@ -6,4 +6,6 @@ BOOL SetupPixelFormat(HDC hDC);
 
 void init(float width, float height);
 
+void GameLoop();
+
 void CleanUp();
