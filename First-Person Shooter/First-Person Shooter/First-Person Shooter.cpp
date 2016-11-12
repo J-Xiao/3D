@@ -99,15 +99,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     MSG msg;
 
-    // Main message loop:
-    while (GetMessage(&msg, nullptr, 0, 0))
-    {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
-    }
+    //// Main message loop:
+    //while (getmessage(&msg, nullptr, 0, 0))
+    //{
+    //    if (!translateaccelerator(msg.hwnd, hacceltable, &msg))
+    //    {
+    //        translatemessage(&msg);
+    //        dispatchmessage(&msg);
+    //    }
+    //}
 
     return (int) msg.wParam;
 }
@@ -270,6 +270,16 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 void GameLoop()
 {
 	MSG msg;
+	BOOL fMessage;
+	PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE);
+
+	while (msg.message != WM_QUIT) {
+		fMessage = PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE);
+		if (fMessage) {
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+	}
 }
 
 // OpenGL module
