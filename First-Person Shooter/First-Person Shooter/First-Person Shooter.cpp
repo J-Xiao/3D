@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "First-Person Shooter.h"
+#include "OpenGL.h"
 
 #define MAX_LOADSTRING 100
 
@@ -11,7 +12,7 @@ HINSTANCE hInst;                                // current instance
 WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 
-
+OpenGL* m_openGL = new OpenGL();
 HDC hDC;
 HGLRC hRC = NULL;
 HWND hWnd = NULL;
@@ -186,7 +187,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
 	case WM_CREATE:
 		hDC = GetDC(hWnd);
-		SetupPixelFormat(hDC);
+		m_openGL->SetupPixelFormat(hDC);
 		return 0;
 		break;
 		
@@ -288,38 +289,6 @@ void GameLoop()
 }
 
 // OpenGL module
-BOOL SetupPixelFormat(HDC hDC) {
-	int nPixelFormat;
-	PIXELFORMATDESCRIPTOR pfd = {
-		sizeof(PIXELFORMATDESCRIPTOR),
-		1,
-		PFD_DRAW_TO_WINDOW,
-		PFD_SUPPORT_OPENGL,
-		PFD_DOUBLEBUFFER,
-		PFD_TYPE_RGBA,
-		16,
-		0,0,0,0,0,0,
-		0,
-		0,
-		0,
-		0,0,0,0,
-		32,
-		0,
-		0,
-		PFD_MAIN_PLANE,
-		0,
-		0
-	};
-	
-	if (!(nPixelFormat = ChoosePixelFormat(hDC, &pfd))) {
-		MessageBox(NULL, L"Not found", L"Error", MB_OK | MB_ICONEXCLAMATION);
-	}
-
-	SetPixelFormat(hDC, nPixelFormat, &pfd);
-	hRC = wglCreateContext(hDC);
-	wglMakeCurrent(hDC, hRC);
-	return TRUE;
-}
 
 void init(float width, float height)
 {
