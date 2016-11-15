@@ -9,9 +9,9 @@ public:
 	HDC hDC;
 	HGLRC hRC;
 
-	BOOL SetupPixelFormat(HDC hDC);
-	void init(int width, int height);
-	void Render();
-	void CleanUp();
+	BOOL setupPixelFormat(HDC hDC);
+	void init(float width, float height);
+	void render();
+	void cleanUp();
 };
 

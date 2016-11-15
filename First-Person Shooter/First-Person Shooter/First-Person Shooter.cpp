@@ -187,12 +187,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
 	case WM_CREATE:
 		hDC = GetDC(hWnd);
-		m_openGL->SetupPixelFormat(hDC);
+		m_openGL->setupPixelFormat(hDC);
 		return 0;
 		break;
 		
 	case WM_CLOSE:
-		CleanUp();
+		m_openGL->cleanUp();
 		PostQuitMessage(0);
 		return 0;
 		break;
@@ -203,14 +203,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		if (height == 0) {
 			height = 1;
 		}
-		init(width, height);
+		m_openGL->init(width, height);
 		return 0;
 		break;
 
 	case WM_KEYUP:
 		switch (wParam) {
 			case VK_ESCAPE:
-				CleanUp();
+				m_openGL->cleanUp();
 				PostQuitMessage(0);
 				return 0;
 				break;
@@ -283,40 +283,9 @@ void GameLoop()
 			DispatchMessage(&msg);
 		}
 		else {
-			Render();
+			m_openGL->render();
 		}
 	}
 }
 
 // OpenGL module
-
-void init(float width, float height)
-{
-	glViewport(0, 0, width, height);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(
-		45.0f,
-		width / height,
-		1.0f,
-		1000.0f
-	);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-}
-
-void CleanUp() {
-	wglMakeCurrent(hDC, NULL);
-	wglDeleteContext(hRC);
-}
-
-void Render() {
-	glClearColor(0.0f, 0.0f, 0.8f, 0.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	glLoadIdentity();
-
-	glFlush();
-
-	SwapBuffers(hDC);
-}

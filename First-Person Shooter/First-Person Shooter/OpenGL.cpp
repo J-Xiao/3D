@@ -9,9 +9,10 @@ OpenGL::OpenGL()
 
 OpenGL::~OpenGL()
 {
+	cleanUp();
 }
 
-BOOL OpenGL::SetupPixelFormat(HDC hdc) {
+BOOL OpenGL::setupPixelFormat(HDC hdc) {
 	this->hDC = hdc;
 
 	int nPixelFormat;
@@ -44,4 +45,35 @@ BOOL OpenGL::SetupPixelFormat(HDC hdc) {
 	hRC = wglCreateContext(hDC);
 	wglMakeCurrent(hDC, hRC);
 	return TRUE;
+}
+
+void OpenGL::init(float width, float height)
+{
+	glViewport(0, 0, width, height);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(
+		45.0f,
+		width / height,
+		1.0f,
+		1000.0f
+	);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+}
+
+void OpenGL::render() {
+	glClearColor(0.0f, 0.0f, 0.8f, 0.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glLoadIdentity();
+
+	glFlush();
+
+	SwapBuffers(hDC);
+}
+
+void OpenGL::cleanUp() {
+	wglMakeCurrent(hDC, NULL);
+	wglDeleteContext(hRC);
 }
