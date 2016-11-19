@@ -30,3 +30,4 @@
 #pragma comment(lib, "winmm.lib")
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glu32.lib")
+#pragma comment(lib, "kernel32.lib")

@@ -13,7 +13,7 @@ WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 
 OpenGL* m_openGL = new OpenGL();
-HDC hDC;
+HDC hDC = NULL;
 HGLRC hRC = NULL;
 HWND hWnd = NULL;
 int width = 800;

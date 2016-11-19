@@ -68,6 +68,13 @@ void OpenGL::render() {
 
 	glLoadIdentity();
 
+	glColor3f(0, 0, 0);
+	glPushMatrix();
+	glTranslatef(-5, 4, -13);
+	glRotatef(0, 1.0, 1.0, 1.0);
+	
+
+
 	glFlush();
 
 	SwapBuffers(hDC);
@@ -76,4 +83,12 @@ void OpenGL::render() {
 void OpenGL::cleanUp() {
 	wglMakeCurrent(hDC, NULL);
 	wglDeleteContext(hRC);
+}
+
+void drawPoint() {
+	glBegin(GL_POINTS);
+	glVertex3f(0.0, 1.0, -1.0);
+	glVertex3f(-1.0, -1.0, 0.0);
+	glVertex3f(1.0, -1.0, 0.0);
+	glEnd();
 }
