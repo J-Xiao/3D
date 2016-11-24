@@ -101,3 +101,12 @@ void drawLine()
 	glVertex3f(1.0, -1.0, 0.0);
 	glEnd();
 }
+
+void drawTriangle()
+{
+	glBegin(GL_POLYGON);
+	glVertex3f(0.0, 1.0, -1.0);
+	glVertex3f(-1.0, -1.0, 0.0);
+	glVertex3f(1.0, -1.0, 0.0);
+	glEnd();
+}
