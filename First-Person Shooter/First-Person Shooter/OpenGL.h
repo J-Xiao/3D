@@ -15,3 +15,5 @@ public:
 	void cleanUp();
 };
 
+void drawPoint();
+void drawTriangle();

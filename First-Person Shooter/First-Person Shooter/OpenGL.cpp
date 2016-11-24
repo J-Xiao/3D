@@ -68,12 +68,12 @@ void OpenGL::render() {
 
 	glLoadIdentity();
 
-	glColor3f(0, 0, 0);
+	glColor3f(1, 0, 0);
 	glPushMatrix();
-	glTranslatef(-5, 4, -13);
+	glTranslatef(5, 4, -13);
 	glRotatef(0, 1.0, 1.0, 1.0);
 	
-
+	drawTriangle();
 
 	glFlush();
 
