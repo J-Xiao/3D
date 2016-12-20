@@ -68,12 +68,24 @@ void OpenGL::render() {
 
 	glLoadIdentity();
 
-	glColor3f(1, 0, 0);
+	glColor3f(0, 0, 0);
+
 	glPushMatrix();
 	glTranslatef(5, 4, -13);
 	glRotatef(0, 1.0, 1.0, 1.0);
-	
 	drawTriangle();
+
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(-5, 0, -13);
+	glRotatef(20, 1.0, 1.0, 1.0);
+	drawSquare();
+
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0, 0, -13);
+	glRotatef(20, 1.0, 1.0, 1.0);
+	drawCube();
 
 	glFlush();
 
@@ -96,17 +108,54 @@ void drawPoint() {
 void drawLine()
 {
 	glBegin(GL_LINE_LOOP);
-	glVertex3f(0.0, 1.0, -1.0);
-	glVertex3f(-1.0, -1.0, 0.0);
-	glVertex3f(1.0, -1.0, 0.0);
+		glVertex3f(0.0, 1.0, -1.0);
+		glVertex3f(-1.0, -1.0, 0.0);
+		glVertex3f(1.0, -1.0, 0.0);
 	glEnd();
 }
 
 void drawTriangle()
 {
 	glBegin(GL_POLYGON);
-	glVertex3f(0.0, 1.0, -1.0);
-	glVertex3f(-1.0, -1.0, 0.0);
-	glVertex3f(1.0, -1.0, 0.0);
+		glVertex3f(0.0, 1.0, -1.0);
+		glVertex3f(-1.0, -1.0, 0.0);
+		glVertex3f(1.0, -1.0, 0.0);
+	glEnd();
+}
+
+void drawSquare()
+{
+	glBegin(GL_POLYGON);
+		glVertex3f(0.0f, 0.0f, 0.0f);
+		glVertex3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(1.0f, 0.0f, -1.0f);
+		glVertex3f(0.0f, 0.0f, -1.0f);
+	glEnd();
+}
+
+void drawCube()
+{
+	glBegin(GL_QUAD_STRIP);
+		glVertex3f(0.0f, 0.0f, 0.0f);
+		glVertex3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(1.0f, 1.0f, 0.0f);
+		glVertex3f(1.0f, 0.0f, -1.0f);
+		glVertex3f(1.0f, 1.0f, -1.0f);
+		glVertex3f(0.0f, 0.0f, -1.0f);
+		glVertex3f(0.0f, 1.0f, -1.0f);
+		glVertex3f(0.0f, 0.0f, 0.0f);
+		glVertex3f(0.0f, 1.0f, 0.0f);
+	glEnd();
+
+	glBegin(GL_POLYGON);
+		glVertex3f(0.0f, 0.0f, 0.0f);
+		glVertex3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(1.0f, 0.0f, -1.0f);
+		glVertex3f(0.0f, 0.0f, -1.0f);
+		glVertex3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(1.0f, 1.0f, 0.0f);
+		glVertex3f(1.0f, 1.0f, -1.0f);
+		glVertex3f(0.0f, 1.0f, -1.0f);
 	glEnd();
 }

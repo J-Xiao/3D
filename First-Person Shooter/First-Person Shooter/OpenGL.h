@@ -17,3 +17,5 @@ public:
 
 void drawPoint();
 void drawTriangle();
+void drawSquare();
+void drawCube();
