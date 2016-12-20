@@ -87,6 +87,12 @@ void OpenGL::render() {
 	glRotatef(20, 1.0, 1.0, 1.0);
 	drawCube();
 
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(5, 0, -13);
+	glRotatef(0, 1.0, 1.0, 1.0);
+	drawCircle();
+
 	glFlush();
 
 	SwapBuffers(hDC);
@@ -157,5 +163,17 @@ void drawCube()
 		glVertex3f(1.0f, 1.0f, 0.0f);
 		glVertex3f(1.0f, 1.0f, -1.0f);
 		glVertex3f(0.0f, 1.0f, -1.0f);
+	glEnd();
+}
+
+void drawCircle()
+{
+	glBegin(GL_TRIANGLE_FAN);
+		glVertex3f(0, 0, 0.0f);
+		for (int i = 0; i < 390; i += 30)
+		{
+			float p = (float) (i * 3.14 / 180);
+			glVertex3f((float)sin(p), (float)cos(p), 0.0f);
+		}
 	glEnd();
 }
