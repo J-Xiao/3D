@@ -93,6 +93,12 @@ void OpenGL::render() {
 	glRotatef(0, 1.0, 1.0, 1.0);
 	drawCircle();
 
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(-5, -4, -13);
+	glRotatef(0, 1.0, 1.0, 1.0);
+	drawPillar();
+
 	glFlush();
 
 	SwapBuffers(hDC);
@@ -174,6 +180,18 @@ void drawCircle()
 		{
 			float p = (float) (i * 3.14 / 180);
 			glVertex3f((float)sin(p), (float)cos(p), 0.0f);
+		}
+	glEnd();
+}
+
+void drawPillar()
+{
+	glBegin(GL_QUAD_STRIP);
+		for(int i = 0; i < 390; i += 30)
+		{
+			float p = (float)(i * 3.14 / 180);
+			glVertex3f((float)(sin(p)/2), (float)(cos(p)/2), 1.0f);
+			glVertex3f((float)(sin(p)/2), (float)(cos(p)/2), 0.0f);
 		}
 	glEnd();
 }

@@ -20,3 +20,4 @@ void drawTriangle();
 void drawSquare();
 void drawCube();
 void drawCircle();
+void drawPillar();
