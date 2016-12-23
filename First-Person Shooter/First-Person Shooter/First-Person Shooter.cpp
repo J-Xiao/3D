@@ -187,12 +187,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
 	case WM_CREATE:
 		hDC = GetDC(hWnd);
-		m_openGL->setupPixelFormat(hDC);
+		m_openGL->SetupPixelFormat(hDC);
 		return 0;
 		break;
 		
 	case WM_CLOSE:
-		m_openGL->cleanUp();
+		m_openGL->CleanUp();
 		PostQuitMessage(0);
 		return 0;
 		break;
@@ -203,14 +203,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		if (height == 0) {
 			height = 1;
 		}
-		m_openGL->init(width, height);
+		m_openGL->Init(width, height);
 		return 0;
 		break;
 
 	case WM_KEYUP:
 		switch (wParam) {
 			case VK_ESCAPE:
-				m_openGL->cleanUp();
+				m_openGL->CleanUp();
 				PostQuitMessage(0);
 				return 0;
 				break;
@@ -283,7 +283,7 @@ void GameLoop()
 			DispatchMessage(&msg);
 		}
 		else {
-			m_openGL->render();
+			m_openGL->Render();
 		}
 	}
 }

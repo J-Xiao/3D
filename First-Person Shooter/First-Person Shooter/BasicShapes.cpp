@@ -11,7 +11,7 @@ BasicShapes::~BasicShapes()
 {
 }
 
-void BasicShapes::drawPoint() {
+void BasicShapes::DrawPoint() {
 	glBegin(GL_POINTS);
 	glVertex3f(0.0, 1.0, -1.0);
 	glVertex3f(-1.0, -1.0, 0.0);
@@ -19,7 +19,7 @@ void BasicShapes::drawPoint() {
 	glEnd();
 }
 
-void BasicShapes::drawLine()
+void BasicShapes::DrawLine()
 {
 	glBegin(GL_LINE_LOOP);
 	glVertex3f(0.0, 1.0, -1.0);
@@ -28,7 +28,7 @@ void BasicShapes::drawLine()
 	glEnd();
 }
 
-void BasicShapes::drawTriangle()
+void BasicShapes::DrawTriangle()
 {
 	glBegin(GL_POLYGON);
 	glVertex3f(0.0, 1.0, -1.0);
@@ -37,7 +37,7 @@ void BasicShapes::drawTriangle()
 	glEnd();
 }
 
-void BasicShapes::drawSquare()
+void BasicShapes::DrawSquare()
 {
 	glBegin(GL_POLYGON);
 	glVertex3f(0.0f, 0.0f, 0.0f);
@@ -47,7 +47,7 @@ void BasicShapes::drawSquare()
 	glEnd();
 }
 
-void BasicShapes::drawCube()
+void BasicShapes::DrawCube()
 {
 	glBegin(GL_QUAD_STRIP);
 	glVertex3f(0.0f, 0.0f, 0.0f);
@@ -74,7 +74,7 @@ void BasicShapes::drawCube()
 	glEnd();
 }
 
-void BasicShapes::drawCircle()
+void BasicShapes::DrawCircle()
 {
 	glBegin(GL_TRIANGLE_FAN);
 	glVertex3f(0, 0, 0.0f);
@@ -86,7 +86,7 @@ void BasicShapes::drawCircle()
 	glEnd();
 }
 
-void BasicShapes::drawPillar()
+void BasicShapes::DrawPillar()
 {
 	glBegin(GL_QUAD_STRIP);
 	for (int i = 0; i < 390; i += 30)

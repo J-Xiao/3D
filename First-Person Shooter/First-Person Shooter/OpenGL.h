@@ -8,11 +8,10 @@ public:
 
 	HDC hDC;
 	HGLRC hRC;
-
-	BOOL setupPixelFormat(HDC hDC);
-	void init(float width, float height);
-	void render();
-	void cleanUp();
+	BOOL SetupPixelFormat(HDC hDC);
+	void Init(float width, float height);
+	void Render();
+	void CleanUp();
 };
 
 void drawPoint();

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "OpenGL.h"
+#include "BasicShapes.h"
 
 OpenGL::OpenGL()
 {
@@ -9,10 +10,10 @@ OpenGL::OpenGL()
 
 OpenGL::~OpenGL()
 {
-	cleanUp();
+	CleanUp();
 }
 
-BOOL OpenGL::setupPixelFormat(HDC hdc) {
+BOOL OpenGL::SetupPixelFormat(HDC hdc) {
 	this->hDC = hdc;
 
 	int nPixelFormat;
@@ -47,7 +48,7 @@ BOOL OpenGL::setupPixelFormat(HDC hdc) {
 	return TRUE;
 }
 
-void OpenGL::init(float width, float height)
+void OpenGL::Init(float width, float height)
 {
 	glViewport(0, 0, width, height);
 	glMatrixMode(GL_PROJECTION);
@@ -62,7 +63,7 @@ void OpenGL::init(float width, float height)
 	glLoadIdentity();
 }
 
-void OpenGL::render() {
+void OpenGL::Render() {
 	glClearColor(0.0f, 0.0f, 0.8f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -73,7 +74,7 @@ void OpenGL::render() {
 	glPushMatrix();
 	glTranslatef(5, 4, -13);
 	glRotatef(0, 1.0, 1.0, 1.0);
-	drawTriangle();
+	
 
 	glPopMatrix();
 	glPushMatrix();
@@ -104,7 +105,7 @@ void OpenGL::render() {
 	SwapBuffers(hDC);
 }
 
-void OpenGL::cleanUp() {
+void OpenGL::CleanUp() {
 	wglMakeCurrent(hDC, NULL);
 	wglDeleteContext(hRC);
 }
