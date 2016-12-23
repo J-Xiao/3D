@@ -14,9 +14,3 @@ public:
 	void CleanUp();
 };
 
-void drawPoint();
-void drawTriangle();
-void drawSquare();
-void drawCube();
-void drawCircle();
-void drawPillar();
