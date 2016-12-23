@@ -74,31 +74,31 @@ void OpenGL::Render() {
 	glPushMatrix();
 	glTranslatef(5, 4, -13);
 	glRotatef(0, 1.0, 1.0, 1.0);
-	
+	BasicShapes::DrawTriangle();
 
 	glPopMatrix();
 	glPushMatrix();
 	glTranslatef(-5, 0, -13);
 	glRotatef(20, 1.0, 1.0, 1.0);
-	drawSquare();
+	BasicShapes::DrawSquare();
 
 	glPopMatrix();
 	glPushMatrix();
 	glTranslatef(0, 0, -13);
 	glRotatef(20, 1.0, 1.0, 1.0);
-	drawCube();
+	BasicShapes::DrawCube();
 
 	glPopMatrix();
 	glPushMatrix();
 	glTranslatef(5, 0, -13);
 	glRotatef(0, 1.0, 1.0, 1.0);
-	drawCircle();
+	BasicShapes::DrawCircle();
 
 	glPopMatrix();
 	glPushMatrix();
 	glTranslatef(-5, -4, -13);
 	glRotatef(0, 1.0, 1.0, 1.0);
-	drawPillar();
+	BasicShapes::DrawPillar();
 
 	glFlush();
 
