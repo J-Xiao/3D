@@ -11,5 +11,10 @@ public:
 	static void DrawCube();
 	static void DrawCircle();
 	static void DrawPillar();
+
+private:
+	UINT m_planeMap[2];
+	GLUquadricObj* m_quadricObj;
+	bool LoadT8Map(char *fileName, GLuint &texture);
 };
 
