@@ -11,6 +11,7 @@ public:
 	static void DrawCube();
 	static void DrawCircle();
 	static void DrawPillar();
+	void Box(float x, float y, float z);
 
 private:
 	UINT m_planeMap[2];
