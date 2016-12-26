@@ -4,7 +4,7 @@
 
 BasicShapes::BasicShapes()
 {
-	m_quadricObj = gluNewQuadric();
+ 	m_quadricObj = gluNewQuadric();
 	LoadT8Map("aa.bmp", m_planeMap[0]);
 	LoadT8Map("bb.bmp", m_planeMap[1]);
 }
@@ -50,7 +50,7 @@ bool BasicShapes::LoadT8Map(char *fileName, GLuint &texture)
 	if (dataPos == 0)      dataPos = 54; // The BMP header is done that way
 
 	data = new unsigned char[imageSize];
- 	
+
 	// Read the actual data from the file into the buffer
 	fread(data, 1, imageSize, file);
 
@@ -64,7 +64,7 @@ bool BasicShapes::LoadT8Map(char *fileName, GLuint &texture)
 	glBindTexture(GL_TEXTURE_2D, texture);
 
 	// Give the image to OpenGL
-	
+
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, data);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -73,6 +73,7 @@ bool BasicShapes::LoadT8Map(char *fileName, GLuint &texture)
 	free(data);
 	OutputDebugString(L"Read file successful\n");
 	return true;
+										 
 	//gluBuild2DMipmaps(GL_TEXTURE_2D, 4, )
 }
 
@@ -161,6 +162,45 @@ void BasicShapes::DrawPillar()
 		glVertex3f((float)(sin(p) / 2), (float)(cos(p) / 2), 0.0f);
 	}
 	glEnd();
+}
+
+void BasicShapes::Airplane(float x, float y, float z)
+{
+	glPushMatrix();
+	glTranslatef(x, y, z);
+	glRotatef(-angle, 0.0, 1.0, 0.0);
+	glTranslatef(30, 0, 0);
+	glRotatef(30, 0.0, 0.0, 1.0);
+	//=============================================
+	glPushMatrix();//
+	glRotatef(-angle * 30, 0.0, 0.0, 1.0);
+	glColor3f(0.0, 0.0, 1.0);
+	Box(1.0f, 0.1f, 0.02f);
+	glPopMatrix();
+	glColor3f(1.0, 1.0, 1.0);
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, m_planeMap[1]);
+	glTranslatef(0.0f, 0.0f, -0.5f);
+	gluSphere(m_quadricObj, 0.4f, 8, 8);
+	//=============================================
+	glTranslatef(0.0f, -0.0f, -2);
+	gluCylinder(m_quadricObj, 0.4, 0.4, 2.0, 8, 4);
+	//=====================================================
+	glRotatef(-180, 1.0, 0.0, 0.0);
+	glTranslatef(0.0f, -0.0f, 0.0f);
+	gluCylinder(m_quadricObj, 0.4, 0.1, 1.5, 8, 4);
+	//======================================================
+	glBindTexture(GL_TEXTURE_2D, m_planeMap[0]);//
+	glTranslatef(0.0f, -0.8f, 1.2f);
+	Box(1.0, 0.05f, 0.3f);
+	glTranslatef(0.0f, 0.1f, 0.0f);
+	Box(0.05f, 0.6f, 0.30f);
+	//======================================================
+	glTranslatef(0.0f, 0.7f, -1.9f);
+	Box(3, 0.05f, 0.5f);
+	//======================================================
+	glDisable(GL_TEXTURE_2D);
+	glPopMatrix();
 }
 
 void BasicShapes::Box(float x, float y, float z)

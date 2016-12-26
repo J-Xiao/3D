@@ -1,4 +1,6 @@
 #pragma once
+GLfloat angle = 0;
+
 class BasicShapes
 {
 public:
@@ -11,10 +13,11 @@ public:
 	static void DrawCube();
 	static void DrawCircle();
 	static void DrawPillar();
+	void Airplane(float x, float y, float z);
 	void Box(float x, float y, float z);
 
 private:
-	UINT m_planeMap[2];
+	GLuint m_planeMap[2];
 	GLUquadricObj* m_quadricObj;
 	bool LoadT8Map(char *fileName, GLuint &texture);
 };
