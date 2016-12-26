@@ -25,7 +25,7 @@
 // header files
 #include <gl\GL.h>
 #include <gl\GLU.h>
-
+#include <fstream>
 // lib connections
 #pragma comment(lib, "winmm.lib")
 #pragma comment(lib, "opengl32.lib")

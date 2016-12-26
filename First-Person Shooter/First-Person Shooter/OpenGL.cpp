@@ -61,10 +61,12 @@ void OpenGL::Init(float width, float height)
 	);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
+	m_basicShapes = new BasicShapes();
 }
 
 void OpenGL::Render() {
-	glClearColor(0.0f, 0.0f, 0.8f, 0.0f);
+	glClearColor(0.2f, 0.5f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glLoadIdentity();
@@ -74,31 +76,38 @@ void OpenGL::Render() {
 	glPushMatrix();
 	glTranslatef(5, 4, -13);
 	glRotatef(0, 1.0, 1.0, 1.0);
-	BasicShapes::DrawTriangle();
-
+		BasicShapes::DrawTriangle();
 	glPopMatrix();
+
 	glPushMatrix();
 	glTranslatef(-5, 0, -13);
 	glRotatef(20, 1.0, 1.0, 1.0);
-	BasicShapes::DrawSquare();
-
+		BasicShapes::DrawSquare();
 	glPopMatrix();
+
 	glPushMatrix();
 	glTranslatef(0, 0, -13);
 	glRotatef(20, 1.0, 1.0, 1.0);
-	BasicShapes::DrawCube();
-
+		BasicShapes::DrawCube();
 	glPopMatrix();
+
 	glPushMatrix();
 	glTranslatef(5, 0, -13);
 	glRotatef(0, 1.0, 1.0, 1.0);
-	BasicShapes::DrawCircle();
-
+		BasicShapes::DrawCircle();
 	glPopMatrix();
+
 	glPushMatrix();
 	glTranslatef(-5, -4, -13);
 	glRotatef(0, 1.0, 1.0, 1.0);
-	BasicShapes::DrawPillar();
+		BasicShapes::DrawPillar();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(0, -8, -13);
+	glRotatef(90, 1.0, 1.0, 0.0);
+		m_basicShapes->Airplane(0, 0, 0);
+	glPopMatrix();
 
 	glFlush();
 
