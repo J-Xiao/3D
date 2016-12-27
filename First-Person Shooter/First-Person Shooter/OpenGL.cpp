@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "OpenGL.h"
 #include "BasicShapes.h"
+#include "Camera.h"
 
 OpenGL::OpenGL()
 {
@@ -63,6 +64,7 @@ void OpenGL::Init(float width, float height)
 	glLoadIdentity();
 
 	m_basicShapes = new BasicShapes();
+	m_camera = new Camera();
 }
 
 void OpenGL::Render() {
@@ -109,6 +111,8 @@ void OpenGL::Render() {
 	//glPopMatrix();
 
 	m_basicShapes->Airplane(0, 8, -50);
+
+	m_camera->DisplayScene();
 
 	glFlush();
 

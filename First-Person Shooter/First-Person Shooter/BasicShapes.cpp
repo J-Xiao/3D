@@ -3,7 +3,7 @@
 
 BasicShapes::BasicShapes()
 {
-	angle = 0;
+	m_angle = 0;
  	m_quadricObj = gluNewQuadric();
 	LoadT8Map("aa.bmp", m_planeMap[0]);
 	LoadT8Map("bb.bmp", m_planeMap[1]);
@@ -168,12 +168,12 @@ void BasicShapes::Airplane(float x, float y, float z)
 {
 	glPushMatrix();
 	glTranslatef(x, y, z);
-	glRotatef(-angle, 0.0, 1.0, 0.0);
+	glRotatef(-m_angle, 0.0, 1.0, 0.0);
 	glTranslatef(30, 0, 0);
 	glRotatef(30, 0.0, 0.0, 1.0);
 	//=============================================
 	glPushMatrix();//
-	glRotatef(-angle * 30, 0.0, 0.0, 1.0);
+	glRotatef(-m_angle * 30, 0.0, 0.0, 1.0);
 	glColor3f(0.0, 0.0, 1.0);
 	Box(1.0f, 0.1f, 0.02f);
 	glPopMatrix();
@@ -202,8 +202,8 @@ void BasicShapes::Airplane(float x, float y, float z)
 	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
 
-	angle += 0.2f;
-	if (angle > 360) angle = 0;
+	m_angle += 0.2f;
+	if (m_angle > 360) m_angle = 0;
 }
 
 void BasicShapes::Box(float x, float y, float z)

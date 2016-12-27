@@ -13,5 +13,8 @@ public:
 	void Init(float width, float height);
 	void Render();
 	void CleanUp();
+
+private:
+	class Camera* m_camera;
 };
 

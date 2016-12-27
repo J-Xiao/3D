@@ -146,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicShapes.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="First-Person Shooter.h" />
     <ClInclude Include="OpenGL.h" />
     <ClInclude Include="Resource.h" />
@@ -154,6 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BasicShapes.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="First-Person Shooter.cpp" />
     <ClCompile Include="OpenGL.cpp" />
     <ClCompile Include="stdafx.cpp">
