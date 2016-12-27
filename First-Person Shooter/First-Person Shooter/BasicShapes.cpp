@@ -1,10 +1,9 @@
 #include "stdafx.h"
 #include "BasicShapes.h"
 
-GLfloat angle = 0;
-
 BasicShapes::BasicShapes()
 {
+	angle = 0;
  	m_quadricObj = gluNewQuadric();
 	LoadT8Map("aa.bmp", m_planeMap[0]);
 	LoadT8Map("bb.bmp", m_planeMap[1]);
@@ -203,7 +202,7 @@ void BasicShapes::Airplane(float x, float y, float z)
 	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
 
-	angle += 0.1f;
+	angle += 0.2f;
 	if (angle > 360) angle = 0;
 }
 

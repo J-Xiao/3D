@@ -17,6 +17,7 @@ public:
 
 private:
 	GLuint m_planeMap[2];
+	GLfloat angle;
 	GLUquadricObj* m_quadricObj;
 	bool LoadT8Map(char *fileName, GLuint &texture);
 };
