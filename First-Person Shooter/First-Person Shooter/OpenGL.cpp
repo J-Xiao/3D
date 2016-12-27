@@ -103,11 +103,12 @@ void OpenGL::Render() {
 		BasicShapes::DrawPillar();
 	glPopMatrix();
 
-	glPushMatrix();
-	glTranslatef(0, -8, -13);
-	glRotatef(90, 1.0, 1.0, 0.0);
-		m_basicShapes->Airplane(0, 0, 0);
-	glPopMatrix();
+	//glPushMatrix();
+	//glTranslatef(0, -8, -13);
+	//glRotatef(90, 1.0, 1.0, 0.0);
+	//glPopMatrix();
+
+	m_basicShapes->Airplane(0, 8, -50);
 
 	glFlush();
 

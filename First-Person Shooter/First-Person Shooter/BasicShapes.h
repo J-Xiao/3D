@@ -1,5 +1,4 @@
 #pragma once
-GLfloat angle = 0;
 
 class BasicShapes
 {
