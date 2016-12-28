@@ -73,6 +73,8 @@ void OpenGL::Render() {
 
 	glLoadIdentity();
 
+	m_camera->DisplayScene();
+
 	glColor3f(0, 0, 0);
 
 	glPushMatrix();
@@ -111,8 +113,6 @@ void OpenGL::Render() {
 	//glPopMatrix();
 
 	m_basicShapes->Airplane(0, 8, -50);
-
-	m_camera->DisplayScene();
 
 	glFlush();
 
