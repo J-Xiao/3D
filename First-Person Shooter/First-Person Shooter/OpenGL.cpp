@@ -74,6 +74,7 @@ void OpenGL::Render() {
 	glLoadIdentity();
 
 	m_camera->DisplayScene();
+	m_camera->DrawGround();
 
 	glColor3f(0, 0, 0);
 

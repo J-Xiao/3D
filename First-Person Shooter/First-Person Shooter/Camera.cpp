@@ -53,3 +53,23 @@ BOOL Camera::DisplayScene()
 
 	return TRUE;
 } 
+
+GLvoid Camera::DrawGround()
+{
+	glPushMatrix();
+	glColor3f(0.5f, 0.7f, 1.0f);
+	glTranslatef(0, 0, 0);
+	int size = (int)(MAP * 2);
+
+	glBegin(GL_LINES);
+	for (int i = -size; i < size; i += 4)
+	{
+		glVertex3i(i, 0, -size);
+		glVertex3i(i, 0, size);
+		glVertex3i(-size, 0, i);
+		glVertex3i(size, 0, i);
+	}
+	glEnd();
+
+	glPopMatrix();
+}

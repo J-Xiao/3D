@@ -3,6 +3,7 @@
 #define KEY_DOWN(vk_code)((GetAsyncKeyState(vk_code) & 0x8000) ? 1 : 0)
 #define VK_W 0x57
 #define VK_S 0x53
+#define MAP 40
 
 class Camera
 {
@@ -11,6 +12,7 @@ public:
 	virtual ~Camera();
 
 	BOOL DisplayScene();
+	GLvoid DrawGround();
 
 private:
 	const float SPRINT_SPEED = 0.2f;
