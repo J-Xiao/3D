@@ -6,9 +6,9 @@ Camera::Camera()
 {
 	m_directionAngle = -90;
 
-	m_cameraPos[0] = 0;
-	m_cameraPos[1] = 1.8;
-	m_cameraPos[2] = 0;
+	m_cameraPos.x = 0;
+	m_cameraPos.y = 1.8;
+	m_cameraPos.z = 0;
 }
 
 
@@ -31,23 +31,23 @@ BOOL Camera::DisplayScene()
 
 	if (KEY_DOWN(VK_W))
 	{
-		m_cameraPos[0] += cos(m_directionRadXZ) * m_speed;
-		m_cameraPos[2] += sin(m_directionRadXZ) * m_speed;
+		m_cameraPos.x += cos(m_directionRadXZ) * m_speed;
+		m_cameraPos.z += sin(m_directionRadXZ) * m_speed;
 	}
 
 	if (KEY_DOWN(VK_S))
 	{
-		m_cameraPos[0] -= cos(m_directionRadXZ) * m_speed;
-		m_cameraPos[2] -= sin(m_directionRadXZ) * m_speed;
+		m_cameraPos.x -= cos(m_directionRadXZ) * m_speed;
+		m_cameraPos.z -= sin(m_directionRadXZ) * m_speed;
 	}
 
-	m_targetPos[0] = m_cameraPos[0] + cos(m_directionRadXZ);
-	m_targetPos[1] = m_cameraPos[1];
-	m_targetPos[2] = m_cameraPos[2] + sin(m_directionRadXZ);
+	m_targetPos.x = m_cameraPos.x + cos(m_directionRadXZ);
+	m_targetPos.y = m_cameraPos.y;
+	m_targetPos.z = m_cameraPos.z + sin(m_directionRadXZ);
 
 	gluLookAt(
-		m_cameraPos[0], m_cameraPos[1], m_cameraPos[2],
-		m_targetPos[0], m_targetPos[1], m_targetPos[2],
+		m_cameraPos.x, m_cameraPos.y, m_cameraPos.z,
+		m_targetPos.x, m_targetPos.y, m_targetPos.z,
 		0.0, 1.0, 0.0
 	);
 

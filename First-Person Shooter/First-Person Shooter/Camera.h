@@ -5,6 +5,13 @@
 #define VK_S 0x53
 #define MAP 40
 
+struct Point
+{
+	double x;
+	double y;
+	double z;
+};
+
 class Camera
 {
 public:
@@ -19,11 +26,10 @@ private:
 	const float NORMAL_SPEED = 0.1f;
 
 	float m_speed;
-	double m_cameraPos[3];
-	double m_targetPos[3];
+	Point m_cameraPos;
+	Point m_targetPos;
 
 	float m_elevationAngle;
 	float m_directionAngle;
 	float m_directionRadXZ;
 };
-
