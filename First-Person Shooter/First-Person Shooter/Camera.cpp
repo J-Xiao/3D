@@ -41,6 +41,18 @@ BOOL Camera::DisplayScene()
 		m_cameraPos.z -= sin(m_directionRadXZ) * m_speed;
 	}
 
+	if (KEY_DOWN(VK_A))
+	{
+		m_cameraPos.x += sin(m_directionRadXZ) * m_speed;
+		m_cameraPos.z -= cos(m_directionRadXZ) * m_speed;
+	}
+
+	if (KEY_DOWN(VK_D))
+	{
+		m_cameraPos.x -= sin(m_directionRadXZ) * m_speed;
+		m_cameraPos.z += cos(m_directionRadXZ) * m_speed;
+	}
+
 	if (m_cameraPos.x < -MAP * 2 + 20)
 		m_cameraPos.x = -MAP * 2 + 20;
 
