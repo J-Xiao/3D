@@ -15,6 +15,6 @@ public:
 	void CleanUp();
 
 private:
-	class Camera* m_camera;
+	class Camera *m_camera;
 };
 

@@ -192,7 +192,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 		
 	case WM_CLOSE:
-		m_openGL->CleanUp();
+		delete m_openGL;
 		PostQuitMessage(0);
 		return 0;
 		break;
@@ -210,7 +210,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_KEYUP:
 		switch (wParam) {
 			case VK_ESCAPE:
-				m_openGL->CleanUp();
+				delete m_openGL;
 				PostQuitMessage(0);
 				return 0;
 				break;

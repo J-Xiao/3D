@@ -21,11 +21,12 @@
 
 // TODO: reference additional headers your program requires here
 #include <iostream>
+#include <fstream>
 
 // header files
 #include <gl\GL.h>
 #include <gl\GLU.h>
-#include <fstream>
+
 // lib connections
 #pragma comment(lib, "winmm.lib")
 #pragma comment(lib, "opengl32.lib")

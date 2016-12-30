@@ -70,7 +70,7 @@ bool BasicShapes::LoadT8Map(char *fileName, GLuint &texture)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-	delete data;
+	delete[] data;
 	OutputDebugString(L"Read file successful\n");
 	return true;
 										 

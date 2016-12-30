@@ -11,6 +11,8 @@ OpenGL::OpenGL()
 
 OpenGL::~OpenGL()
 {
+	delete m_basicShapes;
+	delete m_camera;
 	CleanUp();
 }
 
@@ -46,6 +48,10 @@ BOOL OpenGL::SetupPixelFormat(HDC hdc) {
 	SetPixelFormat(hDC, nPixelFormat, &pfd);
 	hRC = wglCreateContext(hDC);
 	wglMakeCurrent(hDC, hRC);
+
+	m_basicShapes = new BasicShapes();
+	m_camera = new Camera();
+
 	return TRUE;
 }
 
@@ -56,19 +62,17 @@ void OpenGL::Init(float width, float height)
 	glLoadIdentity();
 	gluPerspective(
 		45.0f,
-		width / height,
+		(GLfloat) width / (GLfloat) height,
 		1.0f,
 		1000.0f
 	);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	m_basicShapes = new BasicShapes();
-	m_camera = new Camera();
 }
 
 void OpenGL::Render() {
-	glClearColor(0.2f, 0.5f, 0.0f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glLoadIdentity();
@@ -124,4 +128,3 @@ void OpenGL::CleanUp() {
 	wglMakeCurrent(hDC, NULL);
 	wglDeleteContext(hRC);
 }
-
