@@ -53,8 +53,6 @@ BOOL Camera::DisplayScene()
 	if (m_cameraPos.z > MAP * 2 - 20)
 		m_cameraPos.z = MAP * 2 - 20;
 
-	if(m_cameraPos.z )
-
 	m_targetPos.x = m_cameraPos.x + cos(m_directionRadXZ);
 	m_targetPos.y = m_cameraPos.y;
 	m_targetPos.z = m_cameraPos.z + sin(m_directionRadXZ);
