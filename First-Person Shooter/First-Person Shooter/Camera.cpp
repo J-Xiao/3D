@@ -55,17 +55,18 @@ BOOL Camera::DisplayScene()
 		m_cameraPos.z += cos(m_directionRadXZ) * m_speed;
 	}
 
-	if (m_cameraPos.x < -MAP * 2 + 20)
-		m_cameraPos.x = -MAP * 2 + 20;
 
-	if (m_cameraPos.x > MAP * 2 - 20)
-		m_cameraPos.x = MAP * 2 - 20;
+	if (m_cameraPos.x < MAP_SCALE)
+		m_cameraPos.x = MAP_SCALE;
 
-	if (m_cameraPos.z < -MAP * 2 + 20)
-		m_cameraPos.z = -MAP * 2 + 20;
+	if (m_cameraPos.x > (MAP_W - 2) * MAP_SCALE)
+		m_cameraPos.x = (MAP_W - 2) * MAP_SCALE;
 
-	if (m_cameraPos.z > MAP * 2 - 20)
-		m_cameraPos.z = MAP * 2 - 20;
+	if (m_cameraPos.z < -(MAP_W - 2) * MAP_SCALE)
+		m_cameraPos.z = -(MAP_W - 2) * MAP_SCALE;
+
+	if (m_cameraPos.z > -MAP_SCALE)
+		m_cameraPos.z = -MAP_SCALE;
 
 	m_cameraPos.y = 1.8 + GetHeight((float) m_cameraPos.x, (float) m_cameraPos.z);
 
