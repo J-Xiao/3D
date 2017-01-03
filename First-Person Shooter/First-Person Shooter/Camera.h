@@ -29,6 +29,7 @@ public:
 
 private:
 	void InitTerrain(float h);
+	float GetHeight(float x, float z);
 
 	const float SPRINT_SPEED = 0.2f;
 	const float NORMAL_SPEED = 0.1f;

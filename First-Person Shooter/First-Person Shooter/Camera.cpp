@@ -66,7 +66,7 @@ BOOL Camera::DisplayScene()
 	if (m_cameraPos.z > MAP * 2 - 20)
 		m_cameraPos.z = MAP * 2 - 20;
 
-	m_cameraPos.y = 1.8;
+	m_cameraPos.y = 1.8 + GetHeight((float) m_cameraPos.x, (float) m_cameraPos.z);
 
 	m_targetPos.x = m_cameraPos.x + cos(m_directionRadXZ);
 	m_targetPos.y = m_cameraPos.y;
@@ -136,4 +136,27 @@ void Camera::DrawTerrain()
 	{
 		glDrawElements(GL_LINE_STRIP, MAP_W * 2, GL_UNSIGNED_INT, &m_index[z * MAP_W * 2]);
 	}
+}
+
+float Camera::GetHeight(float x, float z)
+{
+	float CameraX = x / MAP_SCALE;
+	float CameraZ = -z / MAP_SCALE;
+	int Col0 = int(CameraX);
+	int Row0 = int(CameraZ);
+	int Col1 = Col0 + 1;
+	int Row1 = Row0 + 1;
+	if (Col1 > MAP_W)	Col1 = 0;
+	if (Row1 > MAP_W)	Row1 = 0;
+	float h00 = m_terrain[Col0 + Row0*MAP_W][1];
+	float h01 = m_terrain[Col1 + Row0*MAP_W][1];
+	float h11 = m_terrain[Col1 + Row1*MAP_W][1];
+	float h10 = m_terrain[Col0 + Row1*MAP_W][1];
+	float tx = CameraX - int(CameraX);
+	float ty = CameraZ - int(CameraZ);
+	float txty = tx * ty;
+	return h00*(1.0f - ty - tx + txty)
+		+ h01*(tx - txty)
+		+ h11*txty
+		+ h10*(ty - txty);
 }
