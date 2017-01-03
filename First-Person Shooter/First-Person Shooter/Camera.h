@@ -9,6 +9,7 @@
 #define MAP_W 32
 #define MAP_SCALE 24.0f
 #define MAP MAP_W*MAP_SCALE/2
+#define BITMAP_ID 0x4D42
 
 struct Point
 {
@@ -30,6 +31,11 @@ public:
 private:
 	void InitTerrain(float h);
 	float GetHeight(float x, float z);
+
+	BITMAPINFOHEADER  m_bit;
+	GLuint m_texture[16];
+	unsigned char *m_imageData;
+	unsigned char *LoadBit(char *fileName, BITMAPINFOHEADER *bitmap);
 
 	const float SPRINT_SPEED = 0.2f;
 	const float NORMAL_SPEED = 0.1f;

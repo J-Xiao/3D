@@ -9,6 +9,7 @@ Camera::Camera()
 	m_cameraPos.x = 0;
 	m_cameraPos.z = 0;
 
+	m_imageData = LoadBit("data/images/Terrain1.bmp", &m_bit);
 	InitTerrain(1);
 }
 
@@ -112,7 +113,7 @@ void Camera::InitTerrain(float h)
 			int vertex = MAP_W * z + x;
 
 			m_terrain[vertex][0] = float(x) * MAP_SCALE;
-			m_terrain[vertex][1] = h + RANDF * h;
+			m_terrain[vertex][1] = float(m_imageData[(z * MAP_W + x) * 3] / 3);
 			m_terrain[vertex][2] = -float(z) * MAP_SCALE;
 
 			m_texCoord[vertex][0] = (float)x;
@@ -131,10 +132,11 @@ void Camera::InitTerrain(float h)
 
 void Camera::DrawTerrain()
 {
+	glBindTexture(GL_TEXTURE_2D, m_texture[0]);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 	for (int z = 0; z < MAP_W - 1; ++z)
 	{
-		glDrawElements(GL_LINE_STRIP, MAP_W * 2, GL_UNSIGNED_INT, &m_index[z * MAP_W * 2]);
+		glDrawElements(GL_TRIANGLE_STRIP, MAP_W * 2, GL_UNSIGNED_INT, &m_index[z * MAP_W * 2]);
 	}
 }
 
@@ -146,17 +148,72 @@ float Camera::GetHeight(float x, float z)
 	int Row0 = int(CameraZ);
 	int Col1 = Col0 + 1;
 	int Row1 = Row0 + 1;
-	if (Col1 > MAP_W)	Col1 = 0;
-	if (Row1 > MAP_W)	Row1 = 0;
+
+	if (Col1 > MAP_W)
+		Col1 = 0;
+
+	if (Row1 > MAP_W)
+		Row1 = 0;
+
 	float h00 = m_terrain[Col0 + Row0*MAP_W][1];
 	float h01 = m_terrain[Col1 + Row0*MAP_W][1];
 	float h11 = m_terrain[Col1 + Row1*MAP_W][1];
 	float h10 = m_terrain[Col0 + Row1*MAP_W][1];
+
 	float tx = CameraX - int(CameraX);
 	float ty = CameraZ - int(CameraZ);
 	float txty = tx * ty;
+
 	return h00*(1.0f - ty - tx + txty)
 		+ h01*(tx - txty)
 		+ h11*txty
 		+ h10*(ty - txty);
+}
+
+unsigned char * Camera::LoadBit(char *fileName, BITMAPINFOHEADER *bitmap)
+{
+	FILE *filePtr;
+	BITMAPFILEHEADER header;
+	unsigned char *image;
+
+	fopen_s(&filePtr, fileName, "rb");
+
+	if (filePtr == NULL)
+		return NULL;
+
+	fread(&header, sizeof(BITMAPFILEHEADER), 1, filePtr);
+	if (header.bfType != BITMAP_ID)
+	{
+		fclose(filePtr);
+		return NULL;
+	}
+
+	fread(bitmap, sizeof(BITMAPFILEHEADER), 1, filePtr);
+	fseek(filePtr, header.bfOffBits, SEEK_SET);
+	image = (unsigned char*)malloc(bitmap->biSizeImage);
+
+	if (!image)
+	{
+		free(image);
+		fclose(filePtr);
+		return NULL;
+	}
+
+	fread(image, 1, bitmap->biSizeImage, filePtr);
+
+	if (image == NULL)
+	{
+		fclose(filePtr);
+		return NULL;
+	}
+
+	for (int imageIndex = 0; imageIndex < bitmap->biSizeImage; imageIndex += 3)
+	{
+		unsigned char tempRGB = image[imageIndex];
+		image[imageIndex] = image[imageIndex + 2];
+		image[imageIndex + 2] = tempRGB;
+	}
+
+	fclose(filePtr);
+	return image;
 }
