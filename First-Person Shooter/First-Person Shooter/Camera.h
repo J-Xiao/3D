@@ -5,7 +5,10 @@
 #define VK_S 0x53
 #define VK_A 0x41
 #define VK_D 0x44
-#define MAP 40
+#define RANDF (((float)rand() - (float)rand()) / RAND_MAX)
+#define MAP_W 32
+#define MAP_SCALE 24.0f
+#define MAP MAP_W*MAP_SCALE/2
 
 struct Point
 {
@@ -22,8 +25,11 @@ public:
 
 	BOOL DisplayScene();
 	GLvoid DrawGround();
+	void DrawTerrain();
 
 private:
+	void InitTerrain(float h);
+
 	const float SPRINT_SPEED = 0.2f;
 	const float NORMAL_SPEED = 0.1f;
 
@@ -34,4 +40,8 @@ private:
 	float m_elevationAngle;
 	float m_directionAngle;
 	float m_directionRadXZ;
+
+	float m_terrain[MAP_W * MAP_W][3];
+	int m_index[MAP_W * MAP_W * 2];
+	float m_texCoord[MAP_W * MAP_W][2];
 };

@@ -7,8 +7,9 @@ Camera::Camera()
 	m_directionAngle = -90;
 
 	m_cameraPos.x = 0;
-	m_cameraPos.y = 1.8;
 	m_cameraPos.z = 0;
+
+	InitTerrain(1);
 }
 
 
@@ -65,6 +66,8 @@ BOOL Camera::DisplayScene()
 	if (m_cameraPos.z > MAP * 2 - 20)
 		m_cameraPos.z = MAP * 2 - 20;
 
+	m_cameraPos.y = 1.8;
+
 	m_targetPos.x = m_cameraPos.x + cos(m_directionRadXZ);
 	m_targetPos.y = m_cameraPos.y;
 	m_targetPos.z = m_cameraPos.z + sin(m_directionRadXZ);
@@ -96,4 +99,41 @@ GLvoid Camera::DrawGround()
 	glEnd();
 
 	glPopMatrix();
+}
+
+void Camera::InitTerrain(float h)
+{
+	int index = 0;
+
+	for (int z = 0; z < MAP_W; z++)
+	{
+		for (int x = 0; x < MAP_W; x++)
+		{
+			int vertex = MAP_W * z + x;
+
+			m_terrain[vertex][0] = float(x) * MAP_SCALE;
+			m_terrain[vertex][1] = h + RANDF * h;
+			m_terrain[vertex][2] = -float(z) * MAP_SCALE;
+
+			m_texCoord[vertex][0] = (float)x;
+			m_texCoord[vertex][1] = (float)z;
+
+			m_index[index++] = vertex;
+			m_index[index++] = vertex + MAP_W;
+		}
+	}
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glVertexPointer(3, GL_FLOAT, 0, m_terrain);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glTexCoordPointer(2, GL_FLOAT, 0, m_texCoord);
+}
+
+void Camera::DrawTerrain()
+{
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+	for (int z = 0; z < MAP_W - 1; ++z)
+	{
+		glDrawElements(GL_LINE_STRIP, MAP_W * 2, GL_UNSIGNED_INT, &m_index[z * MAP_W * 2]);
+	}
 }
