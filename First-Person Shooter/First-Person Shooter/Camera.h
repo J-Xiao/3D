@@ -36,6 +36,7 @@ private:
 	GLuint m_texture[16];
 	unsigned char *m_imageData;
 	unsigned char *LoadBit(char *fileName, BITMAPINFOHEADER *bitmap);
+	bool LoadT8Map(char *fileName, GLuint &texture);
 
 	const float SPRINT_SPEED = 0.2f;
 	const float NORMAL_SPEED = 0.1f;

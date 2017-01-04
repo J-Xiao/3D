@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Camera.h"
-
+#include "bmpread.h"
 
 Camera::Camera()
 {
@@ -10,6 +10,7 @@ Camera::Camera()
 	m_cameraPos.z = 0;
 
 	m_imageData = LoadBit("data/images/Terrain1.bmp", &m_bit);
+	LoadT8Map("data/images/sand0.bmp", m_texture[0]);
 	InitTerrain(1);
 }
 
@@ -217,4 +218,26 @@ unsigned char * Camera::LoadBit(char *fileName, BITMAPINFOHEADER *bitmap)
 
 	fclose(filePtr);
 	return image;
+}
+
+bool Camera::LoadT8Map(char *filename, GLuint &texture)
+{
+	bmpread_t image;
+	
+	if (!bmpread(filename, 0, &image))
+	{
+		return false;
+	}
+
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, 3, image.width, image.height, 0,
+		GL_RGB, GL_UNSIGNED_BYTE, image.rgb_data);
+
+	bmpread_free(&image);
+	return true;
 }
