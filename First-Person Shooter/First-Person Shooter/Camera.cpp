@@ -190,7 +190,7 @@ unsigned char * Camera::LoadBit(char *fileName, BITMAPINFOHEADER *bitmap)
 		return NULL;
 	}
 
-	fread(bitmap, sizeof(BITMAPFILEHEADER), 1, filePtr);
+	fread(bitmap, sizeof(BITMAPINFOHEADER), 1, filePtr);
 	fseek(filePtr, header.bfOffBits, SEEK_SET);
 	image = (unsigned char*)malloc(bitmap->biSizeImage);
 
@@ -223,7 +223,7 @@ unsigned char * Camera::LoadBit(char *fileName, BITMAPINFOHEADER *bitmap)
 bool Camera::LoadT8Map(char *filename, GLuint &texture)
 {
 	bmpread_t image;
-	
+
 	if (!bmpread(filename, 0, &image))
 	{
 		return false;
@@ -231,7 +231,7 @@ bool Camera::LoadT8Map(char *filename, GLuint &texture)
 
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
-	
+
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
