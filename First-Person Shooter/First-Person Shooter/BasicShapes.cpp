@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "BasicShapes.h"
+#include "stb_image_aug.h"
+#include "Camera.h"
 
 BasicShapes::BasicShapes()
 {
@@ -64,11 +66,18 @@ bool BasicShapes::LoadT8Map(char *fileName, GLuint &texture)
 	glBindTexture(GL_TEXTURE_2D, texture);
 
 	// Give the image to OpenGL
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, data);
+	for (int imageIndex = 0; imageIndex < imageSize; imageIndex += 3)
+	{
+		unsigned char tempRGB = data[imageIndex];
+		data[imageIndex] = data[imageIndex + 2];
+		data[imageIndex + 2] = tempRGB;
+	}
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+
 
 	delete[] data;
 	OutputDebugString(L"Read file successful\n");
