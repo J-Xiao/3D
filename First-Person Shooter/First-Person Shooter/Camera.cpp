@@ -4,6 +4,9 @@
 
 Camera::Camera()
 {
+	//TCHAR NPath[MAX_PATH];
+	//GetCurrentDirectory(MAX_PATH, NPath);
+
 	m_directionAngle = -90;
 
 	m_cameraPos.x = 0;
@@ -63,6 +66,18 @@ BOOL Camera::DisplayScene()
 		m_cameraPos.z += cos(m_directionRadXZ) * m_speed;
 	}
 
+	if (KEY_DOWN(VK_UP))
+		m_elevationAngle += 0.1f;
+
+	if (KEY_DOWN(VK_DOWN))
+		m_elevationAngle -= 0.1f;
+
+	if (KEY_DOWN(VK_LEFT))
+		m_directionAngle -= 5;
+
+	if (KEY_DOWN(VK_RIGHT))
+		m_directionAngle += 5;
+
 	if (m_cameraPos.x < MAP_SCALE)
 		m_cameraPos.x = MAP_SCALE;
 
@@ -78,7 +93,7 @@ BOOL Camera::DisplayScene()
 	m_cameraPos.y = 1.8 + GetHeight((float) m_cameraPos.x, (float) m_cameraPos.z);
 
 	m_targetPos.x = m_cameraPos.x + cos(m_directionRadXZ);
-	m_targetPos.y = m_cameraPos.y;
+	m_targetPos.y = m_cameraPos.y + sin(m_elevationAngle);
 	m_targetPos.z = m_cameraPos.z + sin(m_directionRadXZ);
 
 	gluLookAt(
