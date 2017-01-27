@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+#include "stdafx.h"
 #include "OpenGL.h"
 #include "BasicShapes.h"
 #include "Camera.h"
@@ -63,7 +63,7 @@ void OpenGL::Init(float width, float height)
 	gluPerspective(
 		54.0f,
 		(GLfloat) width / (GLfloat) height,
-		1.0f,
+		0.1f,
 		3000.0f
 	);
 	glMatrixMode(GL_MODELVIEW);
