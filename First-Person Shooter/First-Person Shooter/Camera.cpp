@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Camera.h"
 #include "stb_image_aug.h"
+#include "include\bitmap.h"
 
 Camera::Camera()
 {
@@ -20,8 +21,11 @@ Camera::Camera()
 	LoadT8Map("data/images/0Top.bmp", m_texture[4]);
 	LoadT8Map("data/images/0Left.bmp", m_texture[5]);
 	LoadT8Map("data/images/0Right.bmp", m_texture[6]);
+	LoadT16("data/images/CACTUS0.BMP", m_texture[11]);
+	LoadT16("data/images/CACTUS1.BMP", m_texture[12]); 
+	LoadT16("data/images/CACTUS2.BMP", m_texture[13]); 
+	LoadT16("data/images/CACTUS3.BMP", m_texture[14]);
 	InitTerrain(1);
-	glEnable(GL_TEXTURE_2D);
 }
 
 
@@ -390,4 +394,27 @@ void Camera::CreateSkyBox(int a, int wi, int he, int le)
 
 	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
+}
+
+void Camera::LoadT16(char *filename, GLuint &texture)
+{
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	BITMAPINFOHEADER bitHeader;
+	unsigned char *buffer;
+	buffer = LoadBitmapFileWithAlpha(filename, &bitHeader);
+	gluBuild2DMipmaps(GL_TEXTURE_2D,
+		4,
+		bitHeader.biWidth,
+		bitHeader.biHeight,
+		GL_RGBA,
+		GL_UNSIGNED_BYTE,
+		buffer
+	);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+	free(buffer);
 }

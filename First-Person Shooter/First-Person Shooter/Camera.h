@@ -28,6 +28,7 @@ public:
 	GLvoid DrawGround();
 	void DrawTerrain();
 	void CreateSkyBox(int a, int wi, int he, int le);
+	void ShowTree0(float x, float z, float h, float s, int texIndex);
 
 private:
 	void InitTerrain(float h);
@@ -40,6 +41,7 @@ private:
 	void texture(UINT texture);
 	bool LoadT8Map(char *fileName, GLuint &texture);
 	bool LoadT8Map(LPWSTR filename, GLuint &texture);
+	void LoadT16(char *filename, GLuint &texture); 
 
 	const float SPRINT_SPEED = 0.2f;
 	const float NORMAL_SPEED = 0.1f;
