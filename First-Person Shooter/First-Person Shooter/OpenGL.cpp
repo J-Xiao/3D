@@ -49,9 +49,9 @@ BOOL OpenGL::SetupPixelFormat(HDC hdc) {
 	hRC = wglCreateContext(hDC);
 	wglMakeCurrent(hDC, hRC);
 
+	glEnable(GL_DEPTH_TEST);
 	m_basicShapes = new BasicShapes();
 	m_camera = new Camera();
-
 	return TRUE;
 }
 
