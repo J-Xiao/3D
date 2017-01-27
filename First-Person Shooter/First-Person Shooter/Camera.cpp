@@ -27,6 +27,11 @@ Camera::Camera()
 
 Camera::~Camera()
 {
+	for (int i = 0; i < 16; ++i)
+		glDeleteTextures(1, &m_texture[i]);
+
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
 BOOL Camera::DisplayScene()
