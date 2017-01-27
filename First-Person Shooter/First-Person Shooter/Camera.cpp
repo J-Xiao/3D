@@ -273,6 +273,56 @@ bool Camera::LoadT8Map(char *filename, GLuint &texture)
 	return true;
 }
 
+bool Camera::LoadT8Map(LPWSTR filename, GLuint &texture)
+{
+	BITMAPINFO BMInfo;								// need the current OpenGL device contexts in order to make use of windows DIB utilities  
+	const HDC gldc = wglGetCurrentDC();   			// a handle for the current OpenGL Device Contexts
+													// assume there are errors until file is loaded successfully into memory  
+	bool NoErrors = false;  								// release old data since this object could be used to load multiple Textures  
+	//if (data != NULL) delete data;					// windows needs this info to determine what header info we are looking for  
+	BMInfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);  // Get windows to determine color bit depth in the file for us  
+	BMInfo.bmiHeader.biBitCount = 0;				// Get windows to open and load the BMP file and handle the messy decompression if the file is compressed  
+													// assume perfect world and no errors in reading file, Ha Ha  
+	HANDLE DIBHandle = LoadImage(0, filename, IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR | LR_CREATEDIBSECTION | LR_LOADFROMFILE);  // use windows to get header info of bitmap - assume no errors in header format 
+
+	GetDIBits(gldc, (HBITMAP)DIBHandle, 0, 0, NULL, &BMInfo, DIB_RGB_COLORS);
+	DWORD sizeX = BMInfo.bmiHeader.biWidth;
+	DWORD sizeY = BMInfo.bmiHeader.biHeight;				// change color depth to 24 bits (3 bytes (BGR) / pixel)  
+	BMInfo.bmiHeader.biBitCount = 24;				// don't want the data compressed  
+	BMInfo.bmiHeader.biCompression = BI_RGB;
+	const DWORD BitmapLength = sizeX * sizeY * 3;	// 3 bytes (BGR) per pixel (24bp)  
+													// allocate enough memory to hold the pixel data in client memory  
+	BYTE *data = new BYTE[BitmapLength];					// Get windows to do the dirty work of converting the BMP into the format needed by OpenGL  
+													// if file is already 24 bit color then this is a waste of time but makes for short code  
+													// Get the actual Texel data from the BMP object  
+
+	if (GetDIBits(gldc, (HBITMAP)DIBHandle, 0, sizeY, data, &BMInfo, DIB_RGB_COLORS))
+	{
+		NoErrors = true;
+		
+		// NOTE: BMP is in BGR format but OpenGL needs RGB unless you use GL_BGR_EXT
+		const DWORD BitmapLength = sizeX * sizeY * 3;
+		BYTE Temp;  // not quick but it works  
+		for (DWORD i = 0; i< BitmapLength; i += 3)
+		{
+			Temp = data[i];
+			data[i] = data[i + 2];
+			data[i + 2] = Temp;
+		}
+	}
+
+	DeleteObject(DIBHandle);						// don't need the BMP Object anymore  
+	
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	gluBuild2DMipmaps(GL_TEXTURE_2D, 4, sizeX,
+		sizeY, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+	delete data;
+
+	return NoErrors;
+}
+
 void Camera::CreateSkyBox(int a, int wi, int he, int le)
 {
 	float width = MAP*wi;
