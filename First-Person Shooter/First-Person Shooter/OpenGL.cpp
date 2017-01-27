@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "OpenGL.h"
 #include "BasicShapes.h"
 #include "Camera.h"
@@ -23,8 +23,8 @@ BOOL OpenGL::SetupPixelFormat(HDC hdc) {
 	PIXELFORMATDESCRIPTOR pfd = {
 		sizeof(PIXELFORMATDESCRIPTOR),
 		1,
-		PFD_DRAW_TO_WINDOW,
-		PFD_SUPPORT_OPENGL,
+		PFD_DRAW_TO_WINDOW |
+		PFD_SUPPORT_OPENGL |
 		PFD_DOUBLEBUFFER,
 		PFD_TYPE_RGBA,
 		16,
@@ -38,7 +38,7 @@ BOOL OpenGL::SetupPixelFormat(HDC hdc) {
 		0,
 		PFD_MAIN_PLANE,
 		0,
-		0
+		0, 0, 0
 	};
 
 	if (!(nPixelFormat = ChoosePixelFormat(hDC, &pfd))) {
@@ -61,10 +61,10 @@ void OpenGL::Init(float width, float height)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(
-		45.0f,
+		54.0f,
 		(GLfloat) width / (GLfloat) height,
 		1.0f,
-		1000.0f
+		3000.0f
 	);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -78,7 +78,9 @@ void OpenGL::Render() {
 	glLoadIdentity();
 
 	m_camera->DisplayScene();
-	m_camera->DrawGround();
+	m_camera->CreateSkyBox(3,6,3,6);
+	m_camera->DrawTerrain();
+	//m_camera->DrawGround();
 
 	glColor3f(0, 0, 0);
 
@@ -117,7 +119,7 @@ void OpenGL::Render() {
 	//glRotatef(90, 1.0, 1.0, 0.0);
 	//glPopMatrix();
 
-	m_basicShapes->Airplane(0, 8, -50);
+	m_basicShapes->Airplane(MAP + 10, 80, -MAP);
 
 	glFlush();
 
