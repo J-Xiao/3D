@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Camera.h"
-#include "bmpread.h"
+#include "stb_image_aug.h"
 
 Camera::Camera()
 {
@@ -8,10 +8,17 @@ Camera::Camera()
 
 	m_cameraPos.x = 0;
 	m_cameraPos.z = 0;
+	m_elevationAngle = 0;
 
 	m_imageData = LoadBit("data/images/Terrain1.bmp", &m_bit);
 	LoadT8Map("data/images/sand0.bmp", m_texture[0]);
+	LoadT8Map("data/images/0RBack.bmp", m_texture[2]);
+	LoadT8Map("data/images/0Front.bmp", m_texture[3]);
+	LoadT8Map("data/images/0Top.bmp", m_texture[4]);
+	LoadT8Map("data/images/0Left.bmp", m_texture[5]);
+	LoadT8Map("data/images/0Right.bmp", m_texture[6]);
 	InitTerrain(1);
+	glEnable(GL_TEXTURE_2D);
 }
 
 
@@ -55,7 +62,6 @@ BOOL Camera::DisplayScene()
 		m_cameraPos.x -= sin(m_directionRadXZ) * m_speed;
 		m_cameraPos.z += cos(m_directionRadXZ) * m_speed;
 	}
-
 
 	if (m_cameraPos.x < MAP_SCALE)
 		m_cameraPos.x = MAP_SCALE;
@@ -134,12 +140,17 @@ void Camera::InitTerrain(float h)
 
 void Camera::DrawTerrain()
 {
+	glPushMatrix();
+	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, m_texture[0]);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-	for (int z = 0; z < MAP_W - 1; ++z)
-	{
-		glDrawElements(GL_TRIANGLE_STRIP, MAP_W * 2, GL_UNSIGNED_INT, &m_index[z * MAP_W * 2]);
-	}
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+	for (int z = 0; z < MAP_W - 1; z++)
+		glDrawElements(GL_TRIANGLE_STRIP, MAP_W * 2, GL_UNSIGNED_INT, &m_index[z*MAP_W * 2]);
+
+	glDisable(GL_TEXTURE_2D);
+	glPopMatrix();
 }
 
 float Camera::GetHeight(float x, float z)
@@ -193,7 +204,7 @@ unsigned char * Camera::LoadBit(char *fileName, BITMAPINFOHEADER *bitmap)
 	fread(bitmap, sizeof(BITMAPINFOHEADER), 1, filePtr);
 	fseek(filePtr, header.bfOffBits, SEEK_SET);
 	image = (unsigned char*)malloc(bitmap->biSizeImage);
-
+	
 	if (!image)
 	{
 		free(image);
@@ -221,23 +232,28 @@ unsigned char * Camera::LoadBit(char *fileName, BITMAPINFOHEADER *bitmap)
 }
 
 bool Camera::LoadT8Map(char *filename, GLuint &texture)
-{
-	bmpread_t image;
+{	
+	int width, height, numComponents;
 
-	if (!bmpread(filename, 0, &image))
-	{
+	unsigned char *imageData = stbi_load(filename, &width, &height, &numComponents, 4);
+
+	if (imageData == NULL)
 		return false;
-	}
 
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
 
+
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_LINEAR);
+	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_LINEAR);
+
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, 3, image.width, image.height, 0,
-		GL_RGB, GL_UNSIGNED_BYTE, image.rgb_data);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
+	//gluBuild2DMipmaps(GL_TEXTURE_2D, 4, width, height, GL_RGB, GL_UNSIGNED_BYTE, imageData);
 
-	bmpread_free(&image);
+	stbi_image_free(imageData);
+
 	return true;
 }

@@ -27,6 +27,7 @@ public:
 	BOOL DisplayScene();
 	GLvoid DrawGround();
 	void DrawTerrain();
+	void CreateSkyBox(int a, int wi, int he, int le);
 
 private:
 	void InitTerrain(float h);
@@ -36,12 +37,15 @@ private:
 	GLuint m_texture[16];
 	unsigned char *m_imageData;
 	unsigned char *LoadBit(char *fileName, BITMAPINFOHEADER *bitmap);
+	void texture(UINT texture);
 	bool LoadT8Map(char *fileName, GLuint &texture);
+	bool LoadT8Map(LPWSTR filename, GLuint &texture);
 
 	const float SPRINT_SPEED = 0.2f;
 	const float NORMAL_SPEED = 0.1f;
 
-	float m_speed;
+	float m_speed; 
+	float m_elev;
 	Point m_cameraPos;
 	Point m_targetPos;
 
