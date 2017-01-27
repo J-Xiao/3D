@@ -418,3 +418,28 @@ void Camera::LoadT16(char *filename, GLuint &texture)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
 	free(buffer);
 }
+
+void Camera::ShowTree0(float x, float z, float h, float s, int texIndex)
+{
+	glPushMatrix();//
+	glEnable(GL_TEXTURE_2D);
+	float y = GetHeight(x, -z) + h + s;
+	glTranslatef(x, y, -z);
+	glRotatef(180, 1.0, 0.0, 0.0);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_ALPHA_TEST);
+	glAlphaFunc(GL_GREATER, 0);
+	glBindTexture(GL_TEXTURE_2D, m_texture[texIndex]);
+	//	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);//
+	glBegin(GL_QUADS);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(-h, h, 0.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(h, h, 0.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(h, -h, 0.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-h, -h, 0.0f);
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_ALPHA);
+	glDisable(GL_BLEND);
+	glPopMatrix();
+}
