@@ -272,3 +272,67 @@ bool Camera::LoadT8Map(char *filename, GLuint &texture)
 
 	return true;
 }
+
+void Camera::CreateSkyBox(int a, int wi, int he, int le)
+{
+	float width = MAP*wi;
+	float height = MAP*he;
+	float length = MAP*le;
+	float x = MAP - width / 2;
+	float y = MAP / a - height / 2;
+	float z = -MAP - length / 2;
+	///////////////////////////////////////////////////////////////////////////////
+	glPushMatrix();
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, m_texture[2]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glBegin(GL_QUADS);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(x + width, y, z);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(x + width, y + height, z);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(x, y + height, z);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(x, y, z);
+	glEnd();
+	glBindTexture(GL_TEXTURE_2D, m_texture[3]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glBegin(GL_QUADS);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, y, z + length);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, y + height, z + length);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(x + width, y + height, z + length);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(x + width, y, z + length);
+	glEnd();
+
+	glBindTexture(GL_TEXTURE_2D, m_texture[4]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(x + width, y + height, z);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(x + width, y + height, z + length);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, y + height, z + length);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, y + height, z);
+	glEnd();
+
+	glBindTexture(GL_TEXTURE_2D, m_texture[5]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glBegin(GL_QUADS);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(x, y + height, z);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(x, y + height, z + length);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(x, y, z + length);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(x, y, z);
+	glEnd();
+
+	glBindTexture(GL_TEXTURE_2D, m_texture[6]);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(x + width, y, z);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(x + width, y, z + length);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(x + width, y + height, z + length);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(x + width, y + height, z);
+	glEnd();
+
+	glDisable(GL_TEXTURE_2D);
+	glPopMatrix();
+}
