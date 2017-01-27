@@ -81,6 +81,16 @@ void OpenGL::Render() {
 	m_camera->CreateSkyBox(3,6,3,6);
 	m_camera->DrawTerrain();
 	//m_camera->DrawGround();
+	srand(100);
+	for (int i = 0; i<300; i++)
+	{
+		float x = RAND_COORD((MAP_W - 1)*MAP_SCALE);
+		float z = RAND_COORD((MAP_W - 1)*MAP_SCALE);
+		float size = 4.0f + rand() % 4;
+		float h = -size / 10;
+		int   cactus = rand() % 4 + 11;
+		m_camera->ShowTree0(x, z, size, h, cactus);
+	}
 
 	glColor3f(0, 0, 0);
 

@@ -32,3 +32,5 @@
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glu32.lib")
 #pragma comment(lib, "kernel32.lib")
+
+#define RAND_COORD(x)   ((float)rand()/RAND_MAX * (x))
